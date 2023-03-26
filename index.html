@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee Pass</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="user-card">
+            <figure class="user-card__figure">
+                <img class="user-card__img" v-bind="imgData" />
+                <caption>
+                    <h2 class="user-card__hl">{{ userCardH2text }}</h2>
+                    <p>{{ pText }}</p>
+                </caption>
+            </figure>
+            <div class="user-card__data">
+                <h2>{{ displayName }}</h2>
+                <p><strong>StudentID: </strong>{{ displayStudentID }}</p>
+                <p><strong>Class:</strong> {{ displayClass }}</p>
+                <p><strong>Time Schema: </strong>{{ displayTimeSchema }}</p>
+            </div>
+        </div>
+        <form class="user-card__form">
+            <label for="person-name">Name</label>
+            <input id="person-name" name="person-name" v-model="personName" type="text" />
+
+            <label for="student-id">StudentID</label>
+            <input id="student-id" name="student-id" v-model="studentID" type="text" />
+
+            <label for="class">Class</label>
+            <select id="class" v-model="selectedClass">
+                <option v-for="classItem in classes" :key="classItem.value" :value="classItem">
+                    {{ classItem.text }}
+                </option>
+            </select>
+
+            <label for="time-schema">Time Schema</label>
+            <select name="time-schema" id="time-schema" v-model="selectedTimeSchema">
+                <option v-for="timeSchemaItem in timeSchemes" :key="timeSchemaItem.value" :value="timeSchemaItem">{{
+                    timeSchemaItem.text }}</option>
+            </select>
+        </form>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
