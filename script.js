@@ -12,6 +12,8 @@ Vue.createApp({
       },
       personName: "",
       studentID: "",
+      newClassItem: "",
+      newClassItemValue: "",
       selectedClass: null,
       classes: [
         {
@@ -67,5 +69,30 @@ Vue.createApp({
   created() {
     this.selectedClass = this.classes[0];
     this.selectedTimeSchema = this.timeSchemes[0];
+  },
+  methods: {
+    addNewClass() {
+      if (this.newClassItem !== "" && this.newClassItemValue !== "") {
+        this.classes.push({
+          value: this.newClassItemValue,
+          text: this.newClassItem,
+        });
+      }
+      console.log(this.classes);
+    },
+    saveClassesToLocalStorage() {
+      localStorage.setItem("classes", JSON.stringify(this.classes));
+    },
+    loadClassesFromLocalStorage() {
+      const classesFromLocalStorage = JSON.parse(
+        localStorage.getItem("classes")
+      );
+
+      if (classesFromLocalStorage.length > 0) {
+        this.classes = classesFromLocalStorage;
+      } else {
+        this.classes = this.classes;
+      }
+    },
   },
 }).mount("#app");
