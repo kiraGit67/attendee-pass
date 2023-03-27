@@ -11,41 +11,56 @@
 
 <body>
     <div id="app">
-        <div class="user-card">
-            <figure class="user-card__figure">
-                <img class="user-card__img" v-bind="imgData" />
-                <caption>
-                    <h2 class="user-card__hl">{{ userCardH2text }}</h2>
-                    <p>{{ pText }}</p>
-                </caption>
-            </figure>
-            <div class="user-card__data">
-                <h2>{{ displayName }}</h2>
-                <p><strong>StudentID: </strong>{{ displayStudentID }}</p>
-                <p><strong>Class:</strong> {{ displayClass }}</p>
-                <p><strong>Time Schema: </strong>{{ displayTimeSchema }}</p>
+        <div class="user">
+            <div class="user-card">
+                <figure class="user-card__figure">
+                    <img class="user-card__img" v-bind="imgData" />
+                    <caption>
+                        <h2 class="user-card__hl">{{ userCardH2text }}</h2>
+                        <p>{{ pText }}</p>
+                    </caption>
+                </figure>
+                <div class="user-card__data">
+                    <h2>{{ displayName }}</h2>
+                    <p><strong>StudentID: </strong>{{ displayStudentID }}</p>
+                    <p><strong>Class:</strong> {{ displayClass }}</p>
+                    <p><strong>Time Schema: </strong>{{ displayTimeSchema }}</p>
+                </div>
+            </div>
+            <div class="form">
+                <form class="user-card__form">
+                    <label for="person-name">Name</label>
+                    <input id="person-name" name="person-name" v-model="personName" type="text" />
+
+                    <label for="student-id">StudentID</label>
+                    <input id="student-id" name="student-id" v-model="studentID" type="text" />
+
+                    <label for="class">Class</label>
+                    <select id="class" v-model="selectedClass">
+                        <option v-for="classItem in classes" :key="classItem.value" :value="classItem">
+                            {{ classItem.text }}
+                        </option>
+                    </select>
+
+                    <label for="time-schema">Time Schema</label>
+                    <select name="time-schema" id="time-schema" v-model="selectedTimeSchema">
+                        <option v-for="timeSchemaItem in timeSchemes" :key="timeSchemaItem.value"
+                            :value="timeSchemaItem">{{
+                            timeSchemaItem.text }}</option>
+                    </select>
+                </form>
+                <button @click="loadClassesFromLocalStorage()">Load Classes</button>
             </div>
         </div>
-        <form class="user-card__form">
-            <label for="person-name">Name</label>
-            <input id="person-name" name="person-name" v-model="personName" type="text" />
 
-            <label for="student-id">StudentID</label>
-            <input id="student-id" name="student-id" v-model="studentID" type="text" />
-
-            <label for="class">Class</label>
-            <select id="class" v-model="selectedClass">
-                <option v-for="classItem in classes" :key="classItem.value" :value="classItem">
-                    {{ classItem.text }}
-                </option>
-            </select>
-
-            <label for="time-schema">Time Schema</label>
-            <select name="time-schema" id="time-schema" v-model="selectedTimeSchema">
-                <option v-for="timeSchemaItem in timeSchemes" :key="timeSchemaItem.value" :value="timeSchemaItem">{{
-                    timeSchemaItem.text }}</option>
-            </select>
-        </form>
+        <div class="user-card__form">
+            <h2>Add new Class</h2>
+            <label for="newClassItem">Text <span>{{ newClassItem }}</span></label>
+            <input :name="newClassItem" :id="newClassItem" type="text" v-model="newClassItem">
+            <label for="newClassItemValue">Value <span>{{ newClassItemValue }}</span></label>
+            <input :name="newClassItemValue" :id="newClassItemValue" type="text" v-model="newClassItemValue">
+            <button @click="addNewClass(), saveClassesToLocalStorage()">Add new Class</button>
+        </div>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="script.js"></script>
